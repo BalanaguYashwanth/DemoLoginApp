@@ -17,7 +17,7 @@ export function Home(){
     useEffect(async () =>{
         if(localStorage.getItem('user-token'))
         {    
-            const token = window.atob(localStorage.getItem('user-token')) 
+            const token = window.atob(localStorage.getItem('user-token')) // decoded the token
             if(token)
             {
                 setLoading(true)
