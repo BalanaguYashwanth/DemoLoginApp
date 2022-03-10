@@ -23,7 +23,7 @@ export function Login(){
                     password
                 })
                 .then(res=>{
-                    localStorage.setItem('user-token',window.btoa(res.data.token))
+                    localStorage.setItem('user-token',window.btoa(res.data.token)) //encoded the token
                     setFeedback('')
                     navigate('/')
                 })
