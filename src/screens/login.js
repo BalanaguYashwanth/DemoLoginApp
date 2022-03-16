@@ -9,6 +9,7 @@ export function Login(){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [feedback, setFeedback] = useState('') //alert to show the error
+    const [loading, setLoading] = useState(false)
 
     async function submit()
     {
@@ -18,12 +19,13 @@ export function Login(){
             let num =  password.match(/[0-9]/g) ? password.match(/[0-9]/g).length : 0   // count the length of the numbers in given password
             if(num>=3 && character>=8)
             {
+                setLoading(true)
                 await axios.post(LoginApi,{
                     username,
                     password
                 })
                 .then(res=>{
-                    localStorage.setItem('user-token',window.btoa(res.data.token)) //encoded the token
+                    localStorage.setItem('user-token',window.btoa(res.data.token))
                     setFeedback('')
                     navigate('/')
                 })
@@ -39,11 +41,15 @@ export function Login(){
 
     return(
         <div className='center'>   
+      { loading ?  <img src="https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif" alt="loading" /> : (   
+          <>
             <h1> Demo Login </h1>
             <input type="text" placeholder='Enter the username' onChange={(e) => setUsername(e.target.value)} />
             <input type="password" placeholder='Enter the password' onChange={(e) => setPassword(e.target.value)} />
             <button onClick={submit}> submit </button>
-            <p> {feedback && feedback } </p>
+            <p className='feedback'> {feedback && feedback } </p>
+            </>
+    )}
         </div>
     )   
 }
